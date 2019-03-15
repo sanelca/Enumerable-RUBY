@@ -1,4 +1,12 @@
 module Enumerable
+  def my_none?
+    if block_given?
+      self.my_each { |num| return false if yield(num)}
+      return true
+    end
+    self.my_each { |num| return false if num }
+    return true
+  end
   def my_all?
     if block_given?
       self.my_each { |num| return false if !yield(num)}
