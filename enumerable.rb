@@ -23,6 +23,22 @@ module Enumerable
     return true
   end
 
+  def my_inject(memo = 0)
+    if block_given?
+      i = 0
+      if memo == 0
+        memo = self[0]
+        while i < (self.length - 1)
+          memo = yield(memo, self[i + 1])
+          i += 1
+        end
+      else
+        self.my_each { |element| memo = yield(memo, element) }
+      end
+      return memo
+    end
+  end
+
   def my_any?
     if block_given?
       self.my_each do |num|
