@@ -44,7 +44,7 @@ module Enumerable
     self.my_each { |num| return false if num }
     return true
   end
-  
+
   def my_each_with_index
     i = 0
     if block_given?
@@ -82,6 +82,15 @@ module Enumerable
     end
     self
   end
+
+  def my_map
+    result = []
+    if block_given?
+      self.my_each { |num| result << yield(num) }
+      return result
+    end
+    self
+  end  
 end
   arr = [88, 77, 98, 56]
   arr.my_each { |num| print "#{num}! " }
