@@ -8,6 +8,28 @@ module Enumerable
     return true
   end
 
+  def my_any?
+    if block_given?
+      self.my_each do |num|
+        if yield(num)
+          return true
+        end
+      end
+      return false
+    end
+    self.my_each { |num| return true if num }
+    return false
+  end
+
+  def my_none?
+    if block_given?
+      self.my_each { |num| return false if yield(num)}
+      return true
+    end
+    self.my_each { |num| return false if num }
+    return true
+  end
+  
   def my_each_with_index
     i = 0
     if block_given?
@@ -29,7 +51,7 @@ module Enumerable
     end
     self
   end
-  
+
   def my_select
     i = 0
     result = []
