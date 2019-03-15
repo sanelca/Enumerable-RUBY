@@ -106,10 +106,34 @@ module Enumerable
       return result
     end
     self
-  end  
+  end
+
+  def multiply_els(array)
+    array.my_inject { |memo, element| memo * element }
+  end
+
+  def my_map(proc = nil)
+    result = []
+    if proc
+      self.my_each { |num| result << proc.call(num) }
+    else
+      self.my_each { |num| result << yield(num) }
+    end
+    return result
+  end
 end
   arr = [88, 77, 98, 56]
   arr.my_each { |num| print "#{num}! " }
   arr.my_each_with_index do |num, index|
     print "#{num}! " if index%2 == 0
   end
+  arr.my_select{ |item| item%2==0 }
+  arr.my_all? { |num| num >= 2 }
+  arr.my_any? { |num| num >= 2 }
+  arr.my_none? { |num| num >= 2 }
+  arr.my_count { |num| num >= 2 }
+  arr.my_map { |num| num * 2 }
+  arr.my_inject { |memo, element| memo * element }
+  map_proc = Proc.new { |num| num * 2 }
+  arr.my_map(map_proc)
+  arr.my_map(map_proc) { |num| num * 2 }
